@@ -4,16 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Rope
   - Bocek
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Bocek
+  - Character
   - Water
   - UI
-  - Character
+  - Bocek
   - 
   - 
   - 
