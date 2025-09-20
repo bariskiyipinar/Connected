@@ -13,12 +13,14 @@ public class InsectController : MonoBehaviour
     [Header("Ýp Fizik Ayarlarý")]
     public float maxDistance = 3f;
     public float minDistance = 1.5f;
-    public float springForce = 50f;     // Sýký ip için artýrýldý
-    public float damping = 15f;         // Salýnma kontrolü
+    public float springForce = 50f;
+    public float damping = 15f;
 
+    [Header("Hareket Ayarlarý")]
+    public float moveSpeed = 10f;
+    public float jumpForce = 8f; // Zýplama kuvveti
 
     private Rigidbody2D rb;
-    public float moveSpeed = 10f;
     private bool canControl = false;
     private Animator animator;
     private SpriteRenderer sr;
@@ -56,13 +58,19 @@ public class InsectController : MonoBehaviour
                 animator.SetBool("Insect_Walking", false);
             }
 
+          
+            if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.01f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+             
+            }
         }
 
-        // Q tuþuna basýnca böceði kendimize çek
+      
         if (Input.GetKey(KeyCode.Q))
         {
             Vector2 targetPos = karakter.position;
-            float step = 5f * Time.deltaTime; // hýz
+            float step = 5f * Time.deltaTime;
             rb.position = Vector2.MoveTowards(rb.position, targetPos, step);
             rb.velocity = Vector2.zero;
         }
@@ -74,7 +82,7 @@ public class InsectController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        rb.mass = 1.5f; // biraz aðýrlaþtýrdým
+        rb.mass = 1.5f;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         if (lineRenderer == null)
@@ -98,17 +106,15 @@ public class InsectController : MonoBehaviour
             Vector2 dir = karakter.position - rb.position;
             float dist = dir.magnitude;
 
-            // Uzama ve kýsalma kuvveti
             float stretch = 0f;
             if (dist > maxDistance) stretch = dist - maxDistance;
             else if (dist < minDistance) stretch = dist - minDistance;
 
             Vector2 force = dir.normalized * springForce * stretch;
-            force -= rb.velocity * damping; // sönümleme ile salýným kontrolü
+            force -= rb.velocity * damping;
 
             rb.AddForce(force);
 
-            // LineRenderer güncelle
             lineRenderer.SetPosition(0, karakter.position);
             lineRenderer.SetPosition(1, rb.position);
         }
