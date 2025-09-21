@@ -13,8 +13,11 @@ public class CharacterSwitch : MonoBehaviour
     private bool controllingBocek = false;
     private CameraController cam;
 
+     private AudioSource CharacterSwitcherSound;
+
     void Start()
     {
+        CharacterSwitcherSound = GetComponent<AudioSource>();
         if (Camera.main != null)
             cam = Camera.main.GetComponent<CameraController>();
     }
@@ -30,6 +33,9 @@ public class CharacterSwitch : MonoBehaviour
     IEnumerator ControlBocek()
     {
         controllingBocek = true;
+
+        if (CharacterSwitcherSound != null)
+            CharacterSwitcherSound.Play();
 
         // --- Karakter küçülüp kayboluyor ---
         yield return StartCoroutine(ScaleOverTime(character.transform, Vector3.one, Vector3.zero, 0.5f));
@@ -51,10 +57,7 @@ public class CharacterSwitch : MonoBehaviour
         if (cam != null)
             cam.SetTarget(bocek.transform);
 
-        // UI sýfýrla
-        if (InsectTimeImage != null)
-            InsectTimeImage.fillAmount = 1f;
-
+      
         float elapsed = 0f;
         while (elapsed < controlTime)
         {
@@ -64,6 +67,10 @@ public class CharacterSwitch : MonoBehaviour
             yield return null;
         }
 
+        // UI sýfýrla
+        if (InsectTimeImage != null)
+            InsectTimeImage.fillAmount = 1f;
+
         // Süre dolunca karakter tekrar aktif
         character.transform.position = bocek.transform.position;
         character.gameObject.SetActive(true);
@@ -72,6 +79,7 @@ public class CharacterSwitch : MonoBehaviour
         // Kamera tekrar karaktere geçsin
         if (cam != null)
             cam.ResetToDefaultTarget();
+
 
         // --- Karakter büyüyerek geri geliyor ---
         yield return StartCoroutine(ScaleOverTime(character.transform, Vector3.zero, Vector3.one, 0.5f));
@@ -84,6 +92,7 @@ public class CharacterSwitch : MonoBehaviour
 
         controllingBocek = false;
     }
+      
 
     IEnumerator ScaleOverTime(Transform target, Vector3 from, Vector3 to, float duration)
     {

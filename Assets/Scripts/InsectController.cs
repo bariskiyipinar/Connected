@@ -119,4 +119,6 @@ public class InsectController : MonoBehaviour
             lineRenderer.SetPosition(1, rb.position);
         }
     }
+
+  
 }

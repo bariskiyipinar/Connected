@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+
+    public GameObject mouseSpeed;
     MenuAnimatoinEffect menuAnimatoinEffect;
     public GameObject background;
     private void Start()
@@ -30,7 +32,7 @@ public class MenuManager : MonoBehaviour
  
         yield return new WaitForSeconds(animLength);
 
-     
+        mouseSpeed.SetActive(true);
         yield return StartCoroutine(menuAnimatoinEffect.PlayText());
 
      

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndingScreenManager : MonoBehaviour
 {
@@ -170,5 +171,18 @@ public class EndingScreenManager : MonoBehaviour
         }
 
         creditsNamesText.transform.DOLocalMove(finalPos, creditsAppearDuration).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(1f); 
+        GoToMainMenu();
     }
+
+
+    void GoToMainMenu()
+    {
+        if (SoundManager.instance != null)
+            SoundManager.instance.RestartMusic();
+
+        SceneManager.LoadScene("MainMenu"); 
+    }
+
 }
