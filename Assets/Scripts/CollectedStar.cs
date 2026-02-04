@@ -8,9 +8,11 @@ public class StarCollector : MonoBehaviour
     [SerializeField] private StarManager starManager;
     [SerializeField] private float moveSpeed = 5f;
 
+    private bool iscollectedStar;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.gameObject.CompareTag("Bocek"))
         {
             // UI'daki sýradaki yýldýz pozisyonu
             Vector3 targetPos = starManager.StarsGameobjects[starManager.collectedCount].transform.position;
@@ -25,6 +27,11 @@ public class StarCollector : MonoBehaviour
         while (Vector3.Distance(transform.position, target) > 0.05f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+            PolygonCollider2D collider=GetComponent<PolygonCollider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
             yield return null;
         }
 

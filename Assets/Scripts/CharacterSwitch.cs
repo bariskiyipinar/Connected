@@ -56,10 +56,11 @@ public class CharacterSwitch : MonoBehaviour
         // Kamera böceðe geçsin
         if (cam != null)
             cam.SetTarget(bocek.transform);
+        InsectController.IsSkillActive = true;
 
       
         float elapsed = 0f;
-        while (elapsed < controlTime)
+        while (elapsed < controlTime && InsectController.IsSkillActive)
         {
             elapsed += Time.deltaTime;
             if (InsectTimeImage != null)

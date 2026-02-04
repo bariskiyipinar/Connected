@@ -25,6 +25,10 @@ public class Charactercontroller : MonoBehaviour
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip damageClip;
 
+    [Header("Horizontal")]
+
+    private float horizontalMove = 0f;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -37,9 +41,28 @@ public class Charactercontroller : MonoBehaviour
 
     void Update()
     {
-        // Hareket
-        float move = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
+
+   
+
+        if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            horizontalMove = Input.GetAxisRaw("Horizontal") ;
+          
+        }
+
+   
+        if (horizontalMove > 0 && isFacingLeft)
+        {
+            isFacingLeft = false;
+            sr.flipX = false;
+        }
+        else if (horizontalMove < 0 && !isFacingLeft)
+        {
+            isFacingLeft = true;
+            sr.flipX = true;
+        }
+
+
 
         // Zýplama
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
@@ -50,17 +73,8 @@ public class Charactercontroller : MonoBehaviour
             PlaySound(jumpClip,0.1f);
         }
 
-        // Yüzünü çevirme
-        if (move < 0 && !isFacingLeft)
-        {
-            isFacingLeft = true;
-            sr.flipX = true;
-        }
-        else if (move > 0 && isFacingLeft)
-        {
-            isFacingLeft = false;
-            sr.flipX = false;
-        }
+       
+       
 
         // Böcek yönünü ayarla
         GameObject Bocek = GameObject.FindGameObjectWithTag("Bocek");
@@ -71,6 +85,12 @@ public class Charactercontroller : MonoBehaviour
             else
                 Bocek.GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
+    }
+
+    void FixedUpdate()
+    {
+      
+        rb.velocity = new Vector2(horizontalMove * moveSpeed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -115,4 +135,14 @@ public class Charactercontroller : MonoBehaviour
             audioSource.Play();
         }
     }
+
+
+    #region
+    public void leftMoveButton() => horizontalMove = -1f;
+
+    public void PointerUp() => horizontalMove = 0f;
+    public void rightMoveButton() => horizontalMove = 1f;
+   
+
+    #endregion
 }
