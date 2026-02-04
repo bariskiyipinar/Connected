@@ -176,13 +176,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   karakter: {fileID: 0}
   lineRenderer: {fileID: 5143086432339309953}
-  spriteWidth: 8.97
   width: 0.2
   maxDistance: 3
   minDistance: 0
   springForce: 50
   damping: 5
   moveSpeed: 10
+  jumpForce: 8
 --- !u!232 &3226238862396151611
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -211,7 +211,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8143516707702151442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
