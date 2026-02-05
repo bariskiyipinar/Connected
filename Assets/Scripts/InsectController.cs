@@ -25,6 +25,8 @@ public class InsectController : MonoBehaviour
     private Animator animator;
     private SpriteRenderer sr;
 
+    public static bool IsSkillActive;
+
     public void EnableControl(bool value)
     {
         canControl = value;
@@ -38,19 +40,16 @@ public class InsectController : MonoBehaviour
 
     private void Update()
     {
+        // BÖCEK KONTROLÜ (E modundayken)
         if (canControl)
         {
             float move = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
 
-            if (move > 0)
+            // Yürüme animasyonlarý ve zýplama kodlarýn burada kalacak...
+            if (move != 0)
             {
-                sr.flipX = false;
-                animator.SetBool("Insect_Walking", true);
-            }
-            else if (move < 0)
-            {
-                sr.flipX = true;
+                sr.flipX = move < 0;
                 animator.SetBool("Insect_Walking", true);
             }
             else
@@ -58,29 +57,34 @@ public class InsectController : MonoBehaviour
                 animator.SetBool("Insect_Walking", false);
             }
 
-          
             if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.01f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-             
             }
         }
-
-      
-        if (Input.GetKey(KeyCode.Q))
+       
         {
-            Vector2 targetPos = karakter.position;
-            float step = 5f * Time.deltaTime;
-            rb.position = Vector2.MoveTowards(rb.position, targetPos, step);
-            rb.velocity = Vector2.zero;
+            if (Input.GetKey(KeyCode.Q)) 
+            {
+                Vector2 targetPos = karakter.position;
+                float speed = 10f; 
+
+             
+                Vector2 newPos = Vector2.MoveTowards(rb.position, targetPos, speed * Time.deltaTime);
+                rb.MovePosition(newPos);
+
+            
+                rb.velocity = Vector2.zero;
+            }
         }
     }
-
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        IsSkillActive = true;
 
         rb.mass = 1.5f;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;

@@ -36,7 +36,7 @@ public class MenuManager : MonoBehaviour
         yield return StartCoroutine(menuAnimatoinEffect.PlayText());
 
      
-        SceneManager.LoadScene("basescene");
+        SceneManager.LoadScene("level1");
     }
 
     public void QuitFNC()
