@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mossy - Decorations&Hazards_4 1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -343068520, guid: 4ffe43c3b2b0c9b47956b4591ad3912d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2264151, g: 0.2692425, b: 0.9056604, a: 1}
   m_Transform:
     e00: 1
     e01: 0

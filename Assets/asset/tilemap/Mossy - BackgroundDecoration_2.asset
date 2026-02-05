@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mossy - BackgroundDecoration_2
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 804240885, guid: 266a3014e0738da40b1ea9631a7e1c2f, type: 3}
-  m_Color: {r: 0.4441367, g: 0.542442, b: 0.98490566, a: 1}
+  m_Color: {r: 0.44313726, g: 0.5411765, b: 0.9843137, a: 1}
   m_Transform:
     e00: 1
     e01: 0
